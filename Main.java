@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Main {
     static Hashtable<Integer, String> numbers = new Hashtable<Integer, String>();
     static Trie trie = new Trie();
+    static int digitNum = 21;
 
     public static void fillNumberDict(Hashtable<Integer, String> numbers) {
         numbers.put(0, "zero");
