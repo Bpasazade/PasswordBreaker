@@ -35,6 +35,24 @@ public class Main {
 
     }
 
+    public static void insertToTrie(String illegal) {
+        insert(trie.root, illegal);
+    }
+
+    // Inserts a new illegal password by dividing it into digits then add them as child nodes to root one by one.
+    public static void insert(Node root, String password) {
+
+        ArrayList<Integer> digitList = seperateToDigits(password);
+        Node temp = root;
+
+        for (Integer integer : digitList) {
+            Node childNode = new Node(integer);
+            temp.addChildren(childNode);
+            temp = childNode;
+        }
+    }
+
+
     // Checks every possible substring from index 0 of a prefix by number of vowels and consonants.
     public static boolean checkVowelConsonant(String password) {
         int vowelNumber = 0, consonantNumber = 0;
@@ -94,6 +112,18 @@ public class Main {
             }
         }
         return true;
+    }
+
+    // Checks if a password and its illegal digits are already in trie
+    public static boolean checkIsInTrie(String password, ArrayList<String> illegals) {
+
+        for (int i = 0; i < illegals.size(); i++) {
+            if (illegals.get(i).equals(password)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
