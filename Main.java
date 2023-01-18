@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
     static Hashtable<Integer, String> numbers = new Hashtable<Integer, String>();
     static Trie trie = new Trie();
-    static int digitNum = 21;
+    static int digitNum = 2;
 
     public static void fillNumberDict(Hashtable<Integer, String> numbers) {
         numbers.put(0, "zero");
@@ -124,6 +124,11 @@ public class Main {
         }
 
         return false;
+    }
+
+    // Check if input password is at mosst 20 character long.
+    public static boolean checkLength(String password) {
+        return (password.length() <= 20);
     }
 
     public static void main(String[] args) {
