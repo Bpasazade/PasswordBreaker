@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -106,4 +108,72 @@ public class Main {
         return true;
     }
 
+    public static void main(String[] args) {
+
+        fillNumberDict(numbers);
+        ArrayList<String> illegals = new ArrayList<>();
+
+        createTree();
+
+        String password;
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        System.out.println("Enter password: ");
+        password = scanner.nextLine();
+
+
+        while (!checkLength(password)) {
+            System.out.println("Password must be shorter than 20 digit!");
+            System.out.println("Enter password again: ");
+            password = scanner.nextLine();
+        }
+
+        while (!checkOnlyDigits(password)) {
+            System.out.println("Password can contain only numeric (0-9) values!");
+            System.out.println("Enter password again: ");
+            password = scanner.nextLine();
+        }
+
+
+        while (checkIllegal(password)) {
+            illegals = trie.traverseAllTrie(trie.root);
+            if (checkIsInTrie(password, illegals)) {
+                System.out.println("Password is illegal and in trie.");
+            } else {
+                System.out.println("Password is illegal but not in trie. Adding to trie...");
+                insertToTrie(password);
+            }
+            System.out.println("Enter password again: ");
+            password = scanner.nextLine();
+        }
+
+
+        LocalTime from = LocalTime.now();
+        long millis;
+
+        int ctrl = 0;
+        int passwordInt = Integer.parseInt(password);
+        for (int i = 1; i <= password.length(); i++) {
+            for (int j = (int) Math.pow(10, i - 1); j < Math.pow(10, i); j++) {
+                if (checkIsInTrie(j + "", illegals)) ;
+                else {
+                    ctrl++;
+                    if (j == passwordInt) {
+                        System.out.println("Your password is: " + j);
+                        LocalTime to = LocalTime.now();
+                        Duration duration = Duration.between(from, to);
+                        millis = duration.toMillis();
+                        System.out.println("Password is broken in " + ctrl + " iterations and in " + millis + " milliseconds.");
+                    }
+                }
+            }
+        }
+
+
+    }
+
 }
+
+
