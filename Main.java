@@ -24,25 +24,12 @@ public class Main {
         numbers.put(9, "nine");
     }
     public static void createTree() {
-        ArrayList<Integer> numberList = new ArrayList<>();
 
-        try {
-            File file = new File("numbers.txt");
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String number = reader.nextLine();
-                if(!checkVowelConsonant(digitsToString(seperateToDigits(number)))) {
-                    insert(trie.root, number);
-                    //System.out.println(number + " is added.");
-                    //illegal
-                } else {
-                    //System.out.println(number + " is illegal değil");
-                }
-
+        for (int i = 0; i < Math.pow(10, digitNum) - 1; i++) {
+            String number = Integer.toString(i);
+            if (checkIllegal(number)) { // belki patlatabiilir
+                insert(trie.root, number);
             }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
         }
 
     }
